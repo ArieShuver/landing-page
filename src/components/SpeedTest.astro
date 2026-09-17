@@ -1,0 +1,254 @@
+---
+---
+<section id="speed-test" class="speed-test section" style="background: rgba(15, 23, 42, 0.3); position: relative; overflow: hidden;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag reveal-up">כלי חינמי</span>
+                <h2 class="section-title reveal-up">בדקו את <span class="gradient-text">מהירות האתר שלכם</span></h2>
+                <p class="section-desc reveal-up text-reveal-scroll">מהירות האתר משפיעה ישירות על המכירות. הכניסו את הכתובת וקבלו דוח מהירות בזמן אמת!</p>
+            </div>
+            
+            <div class="speed-test-form reveal-up" style="max-width: 600px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 15px; --delay: 0.2s">
+                <input type="url" id="speed-test-url" placeholder="https://www.yourdomain.co.il" style="flex: 1; min-width: 250px; padding: 15px 25px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); color: white; font-family: inherit; font-size: 1rem; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 15px rgba(99, 102, 241, 0.3)';" onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.boxShadow='none';">
+                <button type="button" id="speed-test-btn" class="btn btn-primary" onclick="checkSpeed()" style="border: none; cursor: pointer; padding: 0 30px; border-radius: 30px;">
+                    <span class="btn-text">בדוק עכשיו בחינם</span>
+                    <span class="btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M13 5L20 12L13 19M20 12L0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="btn-shine"></span>
+                </button>
+            </div>
+            
+            <!-- Speed Test Results Container -->
+            <div id="speed-test-results" style="display: none; margin-top: 50px; text-align: center; animation: fadeIn 0.5s ease-out;">
+                
+                <!-- Loader -->
+                <div id="speed-test-loader" style="display: none;">
+                    <style>
+                        .circle-scanning {
+                            border-color: rgba(255,255,255,0.1) !important;
+                            border-top-color: #6366f1 !important;
+                            animation: spin 1s linear infinite !important;
+                            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4) !important;
+                            color: white !important;
+                        }
+                        .circle-scanning span {
+                            animation: counter-spin 1s linear infinite !important;
+                        }
+                        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+                        @keyframes counter-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+                    </style>
+                    <h3 id="loader-status-text" style="color: white; margin-bottom: 10px; transition: opacity 0.3s ease;">מנתח את האתר שלך...</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">מתחבר לשרתי Google (זה עשוי לקחת 15-30 שניות)</p>
+                </div>
+                
+                <!-- Data View -->
+                <div id="speed-test-data" style="display: none; background: rgba(0,0,0,0.4); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); max-width: 600px; margin: 0 auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                    <h3 style="margin-bottom: 30px; font-size: 1.5rem; color: white;">תוצאות הביצועים למובייל</h3>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; margin-bottom: 30px;">
+                        
+                        <!-- Score Circle -->
+                        <div style="text-align: center;">
+                            <div id="speed-score-circle" style="width: 140px; height: 140px; border-radius: 50%; border: 8px solid #10b981; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; margin: 0 auto 15px; color: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); transition: all 0.5s;">
+                                <span id="speed-score-value">0</span>
+                            </div>
+                            <span id="speed-score-label" style="color: #94a3b8; font-weight: 500; display: none;">ציון כולל</span>
+                        </div>
+                        
+                        <!-- Metrics -->
+                        <div id="speed-metrics-panel" style="display: none; text-align: right; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; min-width: 200px;">
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: white; display: block; margin-bottom: 5px;">LCP (טעינה מרכזית):</strong>
+                                <span id="speed-lcp" style="color: #cbd5e1; font-size: 1.1rem;">-</span>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: white; display: block; margin-bottom: 5px;">CLS (יציבות חזותית):</strong>
+                                <span id="speed-cls" style="color: #cbd5e1; font-size: 1.1rem;">-</span>
+                            </div>
+                            <div>
+                                <strong style="color: white; display: block; margin-bottom: 5px;">FCP (טעינה ראשונית):</strong>
+                                <span id="speed-fcp" style="color: #cbd5e1; font-size: 1.1rem;">-</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <p id="speed-test-message" style="margin-bottom: 25px; color: white; font-size: 1.1rem; line-height: 1.5; font-weight: 500;"></p>
+                        <a href="#contact" id="speed-test-action-btn" class="btn btn-primary" style="display: none; border-radius: 30px; font-weight: bold; padding: 15px 40px; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);">צרו קשר לשיפור המהירות וה-SEO</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <script is:inline>
+            // הכניסו כאן את מפתח ה-API האמיתי שלכם מגוגל (Google Cloud Console -> PageSpeed Insights API)
+            // ללא מפתח, גוגל מגבילה את כמות הבדיקות שניתן לבצע
+            const PAGESPEED_API_KEY = 'AIzaSyC9BIwdAYA7VmTWoaJvsvUs55klGBjcJRU';
+
+            async function checkSpeed() {
+                const urlInput = document.getElementById('speed-test-url').value;
+                if(!urlInput) {
+                    alert('אנא הכניסו כתובת אתר תקינה');
+                    return;
+                }
+                
+                let url = urlInput;
+                if(!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+                
+                // Show results section and loader
+                document.getElementById('speed-test-results').style.display = 'block';
+                document.getElementById('speed-test-loader').style.display = 'block';
+                document.getElementById('speed-test-data').style.display = 'block';
+                document.getElementById('speed-test-btn').disabled = true;
+                document.getElementById('speed-test-btn').style.opacity = '0.5';
+                
+                // Add scanning classes and reset data
+                const circle = document.getElementById('speed-score-circle');
+                circle.classList.add('circle-scanning');
+                document.getElementById('speed-score-value').innerText = '...';
+                document.getElementById('speed-score-label').style.display = 'none';
+                document.getElementById('speed-metrics-panel').style.display = 'none';
+                document.getElementById('speed-lcp').innerText = '-';
+                document.getElementById('speed-cls').innerText = '-';
+                document.getElementById('speed-fcp').innerText = '-';
+                document.getElementById('speed-test-message').innerText = '';
+                document.getElementById('speed-test-action-btn').style.display = 'none';
+                
+                // Dynamic loader text
+                const loaderText = document.getElementById('loader-status-text');
+                const loadingMessages = [
+                    "מתחבר לשרתי Google...",
+                    "מנתח זמני טעינה (LCP)...",
+                    "בודק יציבות ויזואלית (CLS)...",
+                    "סורק את מבנה האתר...",
+                    "מעבד תוצאות סופיות..."
+                ];
+                let messageIndex = 0;
+                loaderText.innerText = loadingMessages[0];
+                loaderText.style.opacity = 1;
+                
+                if (window.speedTestInterval) clearInterval(window.speedTestInterval);
+                window.speedTestInterval = setInterval(() => {
+                    messageIndex = (messageIndex + 1) % loadingMessages.length;
+                    loaderText.style.opacity = 0;
+                    setTimeout(() => {
+                        loaderText.innerText = loadingMessages[messageIndex];
+                        loaderText.style.opacity = 1;
+                    }, 300);
+                }, 3500);
+                
+                try {
+                    // יצירת הכתובת לבקשה
+                    let apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile`;
+                    if (PAGESPEED_API_KEY) {
+                        apiUrl += `&key=${PAGESPEED_API_KEY}`;
+                    }
+                    
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        let errorMsg = data.error.message || "שגיאה בבדיקת האתר";
+                        if (errorMsg.includes('Quota exceeded') || data.error.code === 429) {
+                            errorMsg = "עברתם את מכסת הבדיקות החינמית של גוגל. יש להזין מפתח API של Google Cloud בקוד האתר.";
+                        }
+                        throw new Error(errorMsg);
+                    }
+                    if (!data.lighthouseResult || !data.lighthouseResult.categories || !data.lighthouseResult.categories.performance) {
+                        throw new Error("לא ניתן היה לשלוף נתוני מהירות עבור אתר זה");
+                    }
+                    
+                    const score = Math.round(data.lighthouseResult.categories.performance.score * 100);
+                    
+                    // Safe access to audits
+                    const getAuditValue = (key) => {
+                        try {
+                            return data.lighthouseResult.audits[key].displayValue || '-';
+                        } catch(e) {
+                            return '-';
+                        }
+                    };
+                    
+                    const lcp = getAuditValue('largest-contentful-paint');
+                    const cls = getAuditValue('cumulative-layout-shift');
+                    const fcp = getAuditValue('first-contentful-paint');
+                    
+                    showResults(score, lcp, cls, fcp);
+                    
+                } catch (e) {
+                    if (window.speedTestInterval) clearInterval(window.speedTestInterval);
+                    console.error('API Failed:', e);
+                    document.getElementById('speed-test-loader').style.display = 'none';
+                    document.getElementById('speed-test-data').style.display = 'none';
+                    
+                    const circle = document.getElementById('speed-score-circle');
+                    circle.classList.remove('circle-scanning');
+                    document.getElementById('speed-test-btn').disabled = false;
+                    document.getElementById('speed-test-btn').style.opacity = '1';
+                    alert('הבדיקה נכשלה: ' + e.message + '\nאנא ודא שהכתובת תקינה ונסה שוב.');
+                }
+            }
+            
+            function showResults(score, lcp, cls, fcp) {
+                if (window.speedTestInterval) clearInterval(window.speedTestInterval);
+                
+                const circle = document.getElementById('speed-score-circle');
+                circle.classList.remove('circle-scanning');
+                
+                animateValue("speed-score-value", 0, score, 1500);
+                document.getElementById('speed-score-label').style.display = 'inline';
+                document.getElementById('speed-metrics-panel').style.display = 'block';
+                document.getElementById('speed-lcp').innerText = lcp;
+                document.getElementById('speed-cls').innerText = cls;
+                document.getElementById('speed-fcp').innerText = fcp;
+                
+                let message = '';
+                if (score >= 90) {
+                    circle.style.borderColor = '#10b981'; // Green
+                    circle.style.color = '#10b981';
+                    circle.style.boxShadow = '0 0 20px rgba(16, 185, 129, 0.2)';
+                    message = 'האתר שלך במצב מצוין! רוצים לשמוע איך נוכל לשפר את יחס ההמרה והקידום האורגני אפילו יותר?';
+                } else if (score >= 50) {
+                    circle.style.borderColor = '#f59e0b'; // Orange
+                    circle.style.color = '#f59e0b';
+                    circle.style.boxShadow = '0 0 20px rgba(245, 158, 11, 0.2)';
+                    message = 'האתר שלך דורש שיפור במהירות ובחווית משתמש. זה עלול לעלות לך בלקוחות נוטשים ובירידה בדירוגים בגוגל! השאירו פרטים ונשמח לעזור.';
+                } else {
+                    circle.style.borderColor = '#ef4444'; // Red
+                    circle.style.color = '#ef4444';
+                    circle.style.boxShadow = '0 0 20px rgba(239, 68, 68, 0.2)';
+                    message = 'האתר שלך איטי מאוד! גוגל "מעניש" אתרים כאלו והם מפסידים לידים באופן קבוע. השאירו פרטים בדחיפות לשדרוג ותיקון.';
+                }
+                document.getElementById('speed-test-message').innerText = message;
+                document.getElementById('speed-test-action-btn').style.display = 'inline-block';
+                
+                document.getElementById('speed-test-loader').style.display = 'none';
+                document.getElementById('speed-test-data').style.display = 'block';
+                document.getElementById('speed-test-btn').disabled = false;
+                document.getElementById('speed-test-btn').style.opacity = '1';
+            }
+            
+
+            function animateValue(id, start, end, duration) {
+                if (start === end) return;
+                var range = end - start;
+                var current = start;
+                var increment = end > start ? 1 : -1;
+                var stepTime = Math.abs(Math.floor(duration / range));
+                var obj = document.getElementById(id);
+                var timer = setInterval(function() {
+                    current += increment;
+                    obj.innerHTML = current;
+                    if (current == end) {
+                        clearInterval(timer);
+                    }
+                }, stepTime);
+            }
+        </script>
+    </section>

@@ -1,0 +1,87 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalPro | דיגיטל פרו - בניית אתרים, קידום אורגני SEO ופרסום ממומן</title>
+    <meta name="description"
+        content="דיגיטל פרו - מומחים בבניית אתרים מקצועיים, קידום אורגני SEO ופרסום ממומן PPC. מביאים את העסק שלך לעמוד הראשון בגוגל.">
+    <link rel="canonical" href="https://digitalpro.co.il/" />
+    <meta name="keywords"
+        content="סוכנות דיגיטל, בניית אתרים, פיתוח אתרים, קידום אורגני, SEO, פרסום ממומן, קמפיינים בגוגל, PPC, קידום אתרים בגוגל">
+    <meta property="og:title" content="דיגיטל פרו | המומחים לבניית אתרים, קידום אורגני ופרסום ממומן">
+    <meta property="og:description"
+        content="הצוות של דיגיטל פרו מתמחה בבניית אתרים מתקדמים, קידום אורגני (SEO) שמוביל לעמוד הראשון וקמפיינים ממומנים. התחילו להגדיל הכנסות!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://digitalpro.co.il/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DigitalPro | דיגיטל פרו - סוכנות שיווק דיגיטלי">
+    <meta name="twitter:description" content="מומחים בבניית אתרים, קידום אורגני SEO ופרסום ממומן PPC.">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "דיגיטל פרו - DigitalPro",
+      "description": "סוכנות לשיווק דיגיטלי, בניית אתרים, קידום אתרים אורגני SEO ופרסום ממומן.",
+      "url": "https://digitalpro.co.il/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IL"
+      }
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap">
+    </noscript>
+    
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Smooth Scroll Lenis -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+</head>
+
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress-wrap"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.05); z-index: 9999;">
+        <div class="scroll-progress-bar" id="scroll-progress"
+            style="height: 100%; width: 0%; background: linear-gradient(90deg, #6366f1, #06b6d4); border-radius: 0 3px 3px 0; transition: width 0.1s ease-out;">
+        </div>
+    </div>
+
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">
+                <span class="preloader-d">D</span>
+                <span class="preloader-p">P</span>
+            </div>
+            <div class="preloader-bar">
+                <div class="preloader-bar-fill"></div>
+            </div>
+            <p class="preloader-text">טוען חוויה דיגיטלית...</p>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-dot" class="cursor-dot"></div>
+    <div id="cursor-ring" class="cursor-ring"></div>
+
+    <!-- Mouse Glow -->
+    <div id="mouse-glow" class="mouse-glow"></div>
+
+    <slot />
+
+    <script src="/script.js" is:inline></script>
+</body>
+</html>
