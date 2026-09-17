@@ -1,5 +1,3 @@
----
----
 <section id="portfolio" class="portfolio section">
     <div class="container">
         <div class="section-header">
@@ -9,7 +7,6 @@
         </div>
         
         <div class="portfolio-showcase">
-            <!-- Project 1 (iPhone with image swap) -->
             <div class="showcase-item reveal-up">
                 <div class="showcase-content">
                     <span class="portfolio-category">אתר תדמית וקידום</span>
@@ -36,7 +33,6 @@
                 </div>
             </div>
 
-            <!-- Project 2: Law Firm (MacBook with scroll, Reversed) -->
             <div class="showcase-item showcase-item-reversed reveal-up" style="--delay: 0.2s">
                 <div class="showcase-content">
                     <span class="portfolio-category">אתר תדמית</span>
@@ -48,7 +44,7 @@
                         <span>MySQL</span>
                     </div>
                 </div>
-                <div class="showcase-mockup-wrapper">
+                <div class="showcase-mockup-wrapper composite-mockup">
                     <div class="macbook-mockup">
                         <div class="macbook-screen">
                             <div class="macbook-camera"></div>
@@ -60,10 +56,19 @@
                             <div class="macbook-notch"></div>
                         </div>
                     </div>
+                    <div class="iphone-mockup floating-mobile">
+                        <div class="iphone-screen">
+                            <div class="iphone-notch">
+                                <div class="iphone-camera"></div>
+                            </div>
+                            <div class="iphone-display">
+                                <img src="/images/portfolio-5.png" alt="Law Firm Mobile" class="img-scroll" style="object-fit: cover; height: 100%;" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Project 3: Menahem Cohen (iPhone with image swap) -->
             <div class="showcase-item reveal-up" style="--delay: 0.3s">
                 <div class="showcase-content">
                     <span class="portfolio-category">אתר תדמית ומיתוג</span>
@@ -90,7 +95,6 @@
                 </div>
             </div>
 
-            <!-- Project 4 (MacBook with scroll, Reversed) -->
             <div class="showcase-item showcase-item-reversed reveal-up" style="--delay: 0.4s">
                 <div class="showcase-content">
                     <span class="portfolio-category">פורטל תוכן</span>
@@ -102,7 +106,7 @@
                         <span>CDN</span>
                     </div>
                 </div>
-                <div class="showcase-mockup-wrapper">
+                <div class="showcase-mockup-wrapper composite-mockup">
                     <div class="macbook-mockup">
                         <div class="macbook-screen">
                             <div class="macbook-camera"></div>
@@ -114,6 +118,16 @@
                             <div class="macbook-notch"></div>
                         </div>
                     </div>
+                    <div class="iphone-mockup floating-mobile">
+                        <div class="iphone-screen">
+                            <div class="iphone-notch">
+                                <div class="iphone-camera"></div>
+                            </div>
+                            <div class="iphone-display">
+                                <img src="/images/portfolio-6.png" alt="Digital Magazine Mobile" class="img-scroll" style="object-fit: cover; height: 100%;" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,9 +135,7 @@
 </section>
 
 <style>
-/* =====================================================================
-   Portfolio Showcase Styles (Scoped)
-   ===================================================================== */
+
 
 .portfolio-showcase {
     display: flex;
@@ -207,9 +219,6 @@
     padding: 20px;
 }
 
-/* =========================================
-   Realistic MacBook Mockup
-   ========================================= */
 .macbook-mockup {
     width: 100%;
     max-width: 600px;
@@ -465,6 +474,11 @@
         gap: 30px;
     }
 
+    .showcase-content, .showcase-mockup-wrapper {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
     .portfolio-tech {
         justify-content: center;
     }
@@ -474,8 +488,59 @@
     }
     
     .showcase-item:hover .macbook-mockup,
-    .showcase-item:hover .iphone-mockup {
+    .showcase-item:hover .iphone-mockup:not(.floating-mobile) {
         transform: scale(1.02);
+    }
+}
+
+/* =========================================
+   Composite Mockup (Desktop + Mobile)
+   ========================================= */
+.composite-mockup {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.floating-mobile {
+    position: absolute !important;
+    bottom: -20px;
+    right: -20px;
+    width: 35% !important;
+    max-width: 140px !important;
+    margin: 0 !important;
+    transform: rotateY(-15deg) rotateX(5deg) translateZ(50px) !important;
+    z-index: 30;
+    box-shadow: -15px 20px 40px rgba(0,0,0,0.6) !important;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.showcase-item-reversed .floating-mobile {
+    right: auto;
+    left: -20px;
+    transform: rotateY(15deg) rotateX(5deg) translateZ(50px) !important;
+    box-shadow: 15px 20px 40px rgba(0,0,0,0.6) !important;
+}
+
+.showcase-item:hover .floating-mobile {
+    transform: rotateY(0deg) rotateX(0deg) translateZ(100px) translateY(-15px) !important;
+}
+
+@media (max-width: 992px) {
+    .floating-mobile {
+        bottom: -10px;
+        right: 0px;
+        width: 35% !important;
+        transform: rotateY(0) rotateX(0) translateZ(30px) !important;
+    }
+    
+    .showcase-item-reversed .floating-mobile {
+        left: 0px;
+        right: auto;
+        transform: rotateY(0) rotateX(0) translateZ(30px) !important;
+    }
+    
+    .showcase-item:hover .floating-mobile {
+        transform: rotateY(0) rotateX(0) translateZ(40px) translateY(-5px) !important;
     }
 }
 </style>

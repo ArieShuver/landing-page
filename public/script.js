@@ -292,14 +292,14 @@ document.addEventListener('DOMContentLoaded', () => {
         particleMouseY = e.clientY;
     });
 
-        // ציור ועדכון חלקיקי הפיצוץ הצבעוניים
-        for (let i = explosions.length - 1; i >= 0; i--) {
-            explosions[i].update();
-            explosions[i].draw();
-            if (explosions[i].life <= 0) {
-                explosions.splice(i, 1);
-            }
+    // ציור ועדכון חלקיקי הפיצוץ הצבעוניים
+    for (let i = explosions.length - 1; i >= 0; i--) {
+        explosions[i].update();
+        explosions[i].draw();
+        if (explosions[i].life <= 0) {
+            explosions.splice(i, 1);
         }
+    }
 
     function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -646,34 +646,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
-        
+
         // Orbs
         parallaxElements.forEach((el, index) => {
             const speed = 0.03 + (index * 0.01);
             el.style.transform = `translateY(${scrollY * speed}px)`;
         });
-        
+
         // Marquee text
         if (servicesMarquee) {
             const marqueeSpeed = 0.15;
             servicesMarquee.style.transform = `translateY(-50%) translateX(${scrollY * marqueeSpeed}px)`;
         }
-        
+
         // Process line draw
         if (processTimeline && processLineFill) {
             const timelineRect = processTimeline.getBoundingClientRect();
             const windowHeight = window.innerHeight;
-            
+
             // Start drawing when the top of timeline hits middle of screen
             const drawStart = timelineRect.top - windowHeight / 2;
             const drawLength = timelineRect.height;
-            
+
             let progress = 0;
             if (drawStart < 0) {
                 progress = Math.abs(drawStart) / drawLength;
             }
             progress = Math.max(0, Math.min(1, progress));
-            
+
             processLineFill.style.height = `${progress * 100}%`;
         }
     });
@@ -736,7 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (iterations >= maxIterations) {
                     clearInterval(activeGlitchInterval);
                     target.innerText = originalText;
-                    
+
                     // הוספת אנימציית קפיצה (Bounce)
                     target.classList.remove('animate-bounce');
                     void target.offsetWidth; // טריק קטן לאיפוס האנימציה (Reflow)
@@ -768,7 +768,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealTextContainers.forEach(container => {
         const text = container.textContent.trim();
         container.innerHTML = ''; // מנקה את הטקסט המקורי
-        
+
         // מפצל את הטקסט למילים עטופות ב-span
         const words = text.split(/\s+/);
         words.forEach(word => {
@@ -781,16 +781,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleTextReveal() {
         const windowHeight = window.innerHeight;
-        
+
         revealTextContainers.forEach(container => {
             const rect = container.getBoundingClientRect();
             // מחשב כמה מהאלמנט כבר נכנס לפריים
             let progress = (windowHeight - rect.top) / (windowHeight * 0.8);
             progress = Math.max(0, Math.min(1, progress));
-            
+
             const words = container.querySelectorAll('.reveal-word');
             const totalWords = words.length;
-            
+
             words.forEach((word, index) => {
                 const step = index / totalWords;
                 if (progress > step) {
@@ -812,22 +812,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const buttons = document.querySelectorAll('.btn');
     buttons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             const rect = this.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
+
             const ripple = document.createElement('span');
             ripple.classList.add('ripple');
             ripple.style.left = `${x}px`;
             ripple.style.top = `${y}px`;
-            
+
             // צבע קבוע לאפקט הגלים התואם לצבעי האתר
             ripple.style.background = `rgba(99, 102, 241, 0.4)`;
             ripple.style.boxShadow = `0 0 20px rgba(99, 102, 241, 0.6)`;
-            
+
             this.appendChild(ripple);
-            
+
             setTimeout(() => {
                 ripple.remove();
             }, 600);
@@ -846,7 +846,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 backToTopBtn.classList.remove('visible');
             }
         });
-        
+
         backToTopBtn.addEventListener('click', (e) => {
             e.preventDefault();
             window.scrollTo({
